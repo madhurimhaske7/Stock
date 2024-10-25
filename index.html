@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyScript XML Reader</title>
+    <!-- PyScript CSS and JS -->
+https://pyscript.net/latest/pyscript.js"></script>
+</head>
+<body>
+    <h1>XML File Reader with PyScript</h1>
+ 
+    <!-- File input to load XML -->
+    <input type="file" id="xml-file" accept=".xml" />
+    <button onclick="readXml()">Read XML</button>
+ 
+    <!-- Div to display XML content -->
+    <div id="xml-content"></div>
+ 
+    <py-script>
+        import xml.etree.ElementTree as ET
+ 
+        def parse_xml(xml_data):
+            # Parse the XML data
+            root = ET.fromstring(xml_data)
+            # Convert XML structure to string for display
+            result = ""
+            for child in root:
+                result += f"Tag: {child.tag}, Attributes: {child.attrib}, Text: {child.text}<br>"
+            return result
+ 
+        def readXml():
+            # Read the file input
+            xml_file = Element("xml-file").element.files[0]
+            if not xml_file:
+                return
+            # Create a file reader to read the file asynchronously
+reader = window.FileReader.new()
+            reader.onload = lambda event: display_xml(event.target.result)
+            reader.readAsText(xml_file)
+ 
+        def display_xml(xml_data):
+            # Parse and display the XML content
+            content = parse_xml(xml_data)
+            Element("xml-content").element.innerHTML = content
+    </py-script>
+ 
+</body>
+</html>
